@@ -2,10 +2,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CharacterController2D : MonoBehaviour
 {
-	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
+	[SerializeField] public float m_JumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
@@ -267,6 +268,9 @@ public class CharacterController2D : MonoBehaviour
 		{
 			animator.SetBool("Hit", true);
 			life -= damage;
+			FindObjectOfType<Vidas>().VidaTotal = life;
+			FindObjectOfType<Vidas>().GetComponent<TextMeshProUGUI>().text = FindObjectOfType<Vidas>().VidaTotal.ToString();
+			FindObjectOfType<Vidas>().CondicionesVida();
 			Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f ;
 			m_Rigidbody2D.velocity = Vector2.zero;
 			m_Rigidbody2D.AddForce(damageDir * 10);
