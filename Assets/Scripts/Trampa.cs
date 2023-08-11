@@ -16,6 +16,14 @@ public class Trampa : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (puedeMorir)
+        {
+            if (collision.CompareTag("Bala"))
+            {
+                Destroy(collision.transform.gameObject);
+                Destroy(transform.parent.gameObject);
+            }
+        }
         //Solo detecta colisiones del Player
         if (collision.CompareTag("Player") && !FindObjectOfType<Vidas>().inmortal)
         {
@@ -32,15 +40,6 @@ public class Trampa : MonoBehaviour
             collision.transform.position = FindObjectOfType<Inicio>().transform.position;
         }
 
-        if (puedeMorir)
-        {
-            if (collision.CompareTag("Bala"))
-            {
-                Debug.Log("dddddddddddd");
-                Destroy(collision.transform);
-                Destroy(transform.parent);
-            }
-        }
     }
 
     private void Update()

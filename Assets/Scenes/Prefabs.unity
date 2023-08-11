@@ -1492,6 +1492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puedeMorir: 1
+  invertirSprite: 1
 --- !u!1 &283187876
 GameObject:
   m_ObjectHideFlags: 0
