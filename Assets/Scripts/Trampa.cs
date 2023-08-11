@@ -5,6 +5,15 @@ using TMPro;
 
 public class Trampa : MonoBehaviour
 {
+    public bool puedeMorir;
+    public bool invertirSprite;
+    private Vector2 actualpos;
+
+    private SpriteRenderer spriteRenderer;
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Solo detecta colisiones del Player
@@ -22,5 +31,40 @@ public class Trampa : MonoBehaviour
             //Devolver al jugador al inicio
             collision.transform.position = FindObjectOfType<Inicio>().transform.position;
         }
+
+        if (puedeMorir)
+        {
+            if (collision.CompareTag("Bala"))
+            {
+                Debug.Log("dddddddddddd");
+                Destroy(collision.transform);
+                Destroy(transform.parent);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        StartCoroutine(CheckEnemyMoving());
+    }
+    IEnumerator CheckEnemyMoving()
+
+    {
+
+        actualpos = transform.position;
+
+        yield return new WaitForSeconds(0.5f);
+
+
+        if (transform.position.x > actualpos.x)
+        {
+            spriteRenderer.flipX = !invertirSprite;
+        }
+        else if (transform.position.x < actualpos.x)
+        {
+            spriteRenderer.flipX = invertirSprite;
+        }
+
+
     }
 }
